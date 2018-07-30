@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ $@ > 0 ]
+then
+  for lnk in `wget -O - "$1" -q | grep -i "ed2k:" | sed 's/^.*ed2k/ed2k/' | cut -d'"' -f1 | tr -cd '\11\12\15\40-\176' | sort -u`; do
+    echo "${lnk}"
+    /usr/bin/ed2k -c /var/lib/amule/.aMule "${lnk}"
+  done
+else
+  echo "Usage : $0 http://u.r.l"
+fi
